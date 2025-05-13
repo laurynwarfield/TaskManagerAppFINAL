@@ -8,7 +8,6 @@ module com.example.taskmanagerapp {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
     opens com.example.taskmanagerapp to javafx.fxml;
