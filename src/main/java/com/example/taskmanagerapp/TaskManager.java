@@ -5,20 +5,20 @@ import java.util.*;
 
 public class TaskManager {
     private LinkedList<Task> tasks = new LinkedList<>();
-    private Queue<Task> taskQueue = new LinkedList<>();  // Queue for task processing
+    private Queue<Task> taskQueue = new LinkedList<>();
 
     public void addTask(Task task) {
-        tasks.add(task);  // LinkedList for general task management
-        taskQueue.add(task);  // Add to Queue as well for processing
+        tasks.add(task);
+        taskQueue.add(task);
     }
 
     public void deleteTask(Task task) {
         tasks.remove(task);
-        taskQueue.remove(task);  // Remove from Queue as well
+        taskQueue.remove(task);
     }
 
     public List<Task> getTasks() {
-        return new ArrayList<>(tasks);  // Convert LinkedList to List for UI
+        return new ArrayList<>(tasks);
     }
 
     public void saveToFile(String filename) throws IOException {
@@ -31,20 +31,19 @@ public class TaskManager {
 
     public void loadFromFile(String filename) throws IOException {
         tasks.clear();
-        taskQueue.clear();  // Clear Queue as well when loading new tasks
+        taskQueue.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Task task = Task.fromDataString(line);
                 if (task != null) {
                     tasks.add(task);
-                    taskQueue.add(task);  // Add to Queue as well
+                    taskQueue.add(task);
                 }
             }
         }
     }
 
-    // Sort tasks using Merge Sort by priority
     public void sortTasksByPriority() {
         tasks = (LinkedList<Task>) mergeSort(tasks);
     }
@@ -77,8 +76,7 @@ public class TaskManager {
         return result;
     }
 
-    // Process tasks from the Queue (FIFO)
     public Task processTask() {
-        return taskQueue.poll();  // Return the first task in the queue and remove it
+        return taskQueue.poll();
     }
 }

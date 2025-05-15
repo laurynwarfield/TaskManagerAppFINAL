@@ -5,12 +5,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main extends Application {
     private TaskManager taskManager = new TaskManager();
+    private TaskBST taskBST = new TaskBST();
+    private CategoryLookup categoryLookup = new CategoryLookup();
+
     private ListView<Task> listView = new ListView<>();
     private Label summaryLabel = new Label("Total: 0 | High Priority: 0");
 
@@ -47,6 +51,7 @@ public class Main extends Application {
                 }
                 Task task = new Task(title, date, priority, category);
                 taskManager.addTask(task);
+                taskBST.insert(task);  // Add to BST
                 titleField.clear();
                 dueDatePicker.setValue(null);
                 priorityField.clear();
@@ -58,16 +63,50 @@ public class Main extends Application {
             }
         });
 
+        deleteButton.setOnAction(e -> {
+            Task selected = listView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                taskManager.deleteTask(selected);
+                refreshList();
+            } else {
+                showAlert("Please select a task to delete.");
+            }
+        });
+
+        saveButton.setOnAction(e -> {
+            try {
+                taskManager.saveToFile("tasks.txt");
+                showAlert("Tasks saved to file.");
+            } catch (Exception ex) {
+                showAlert("Error saving file: " + ex.getMessage());
+            }
+        });
+
+        loadButton.setOnAction(e -> {
+            try {
+                taskManager.loadFromFile("tasks.txt");
+                refreshList();
+                showAlert("Tasks loaded from file.");
+            } catch (Exception ex) {
+                showAlert("Error loading file: " + ex.getMessage());
+            }
+        });
+
+        sortButton.setOnAction(e -> {
+            taskManager.sortTasksByPriority();
+            refreshList();
+        });
+
         processButton.setOnAction(e -> {
-            Task task = taskManager.processTask();  // Process task from the Queue (FIFO)
+            Task task = taskManager.processTask();
             if (task != null) {
-                showAlert("Processing task: " + task.getTitle());
+                String desc = categoryLookup.getDescription(task.getCategory());
+                showAlert("Processing task: " + task.getTitle() + "\n" + desc);
+                refreshList();
             } else {
                 showAlert("No tasks to process.");
             }
         });
-
-        // Other button event handlers...
 
         VBox inputs = new VBox(5,
                 new Label("Title"), titleField,
