@@ -1,6 +1,6 @@
 package com.example.taskmanagerapp;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class CategoryLookup {
     private HashMap<String, String> categoryMap = new HashMap<>();
@@ -13,5 +13,10 @@ public class CategoryLookup {
 
     public String getDescription(String category) {
         return categoryMap.getOrDefault(category, "Unknown category");
+    }
+
+    // Added method to provide the list of categories for UI usage
+    public List<String> getCategories() {
+        return new ArrayList<>(categoryMap.keySet());
     }
 }

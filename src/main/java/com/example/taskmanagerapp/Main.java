@@ -24,7 +24,7 @@ public class Main extends Application {
         DatePicker dueDatePicker = new DatePicker();
         TextField priorityField = new TextField();
         ComboBox<String> categoryBox = new ComboBox<>();
-        categoryBox.getItems().addAll("Work", "Personal", "Other");
+        categoryBox.getItems().addAll(categoryLookup.getCategories());
         categoryBox.getSelectionModel().selectFirst();
 
         TextField searchField = new TextField();
