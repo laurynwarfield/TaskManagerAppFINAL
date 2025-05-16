@@ -1,0 +1,38 @@
+Major Project for CMSC222 @ FCC
+
+1. Who are the users of the software?
+The primary users of this Task Manager application include:
+
+Individuals: Those seeking a personal productivity tool to manage daily tasks, deadlines, and priorities.
+Teams/Organizations: Small to mid-sized groups managing multiple projects who need task delegation and tracking.
+Project Managers: Users who need a centralized overview of tasks, upcoming deadlines, and task prioritization.
+
+2. What is the purpose of the software?
+The software provides a user-friendly desktop interface for:
+
+Creating and managing tasks with customizable properties (title, due date, priority, category)
+Organizing tasks by category, due date, and priority
+Persisting task data with save/load functionality
+Processing tasks in a queue-based workflow
+Searching through tasks with both keyword filtering and efficient data structures (Binary Search Tree, Hash Table)
+Displaying real-time summaries such as task count and high-priority indicators
+
+3. Where and when will the software be used?
+WHERE: On desktop or laptop environments (e.g., Windows/macOS/Linux) for individual or team-based productivity use.
+WHEN: Used routinely throughout the day to create, update, sort, and complete tasks—especially useful in deadline-driven workflows.
+
+4. How does the software work?
+Task Creation: Users input title, due date, priority, and category (Work, Personal, Other).
+Task Management: Tasks can be added, deleted, saved to a file, and loaded later. Tasks are also sortable by priority.
+Search & Categorization:
+A Binary Search Tree (BST) allows efficient searching of tasks by title.
+A Hash Table provides descriptions for categories to enhance user understanding.
+Task Processing: Tasks are processed in First-In-First-Out (FIFO) order using a queue structure.
+Live Search: Real-time keyword filtering updates the displayed task list based on user input.
+Data Persistence: Tasks are stored in a plain text format and can be saved and loaded between sessions.
+
+5. Why would anyone want to use this software over existing processes?
+Efficiency: Centralizes task information with a GUI, reducing reliance on manual tracking methods like notebooks or spreadsheets.
+Organization: Task sorting, searching, and categorization allow users to quickly access and prioritize their workload.
+Reliability: Save/load features and structured task processing ensure data is not lost and tasks are not overlooked.
+Smart Search: Use of BST and Hash Tables provides efficient search and categorization behind the scenes.
