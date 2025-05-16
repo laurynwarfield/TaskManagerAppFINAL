@@ -31,10 +31,12 @@ public class Task {
         return category;
     }
 
+    // Used to save/load tasks from a file
     public String toDataString() {
         return title + "|" + dueDate + "|" + priority + "|" + category;
     }
 
+    // Creates a Task object from a saved data string
     public static Task fromDataString(String data) {
         try {
             String[] parts = data.split("\\|");
@@ -47,6 +49,7 @@ public class Task {
 
             return new Task(title, date, priority, category);
         } catch (Exception e) {
+            // If any parsing error occurs, return null
             return null;
         }
     }

@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -24,7 +26,7 @@ public class Main extends Application {
         DatePicker dueDatePicker = new DatePicker();
         TextField priorityField = new TextField();
         ComboBox<String> categoryBox = new ComboBox<>();
-        categoryBox.getItems().addAll(categoryLookup.getCategories());
+        categoryBox.getItems().addAll("Work", "Personal", "Other");
         categoryBox.getSelectionModel().selectFirst();
 
         TextField searchField = new TextField();
@@ -102,7 +104,7 @@ public class Main extends Application {
             if (task != null) {
                 String desc = categoryLookup.getDescription(task.getCategory());
                 showAlert("Processing task: " + task.getTitle() + "\n" + desc);
-                refreshList();
+                // Do NOT refresh list here — task stays visible until deleted
             } else {
                 showAlert("No tasks to process.");
             }
@@ -121,9 +123,41 @@ public class Main extends Application {
         layout.setStyle("-fx-padding: 10;");
         Scene scene = new Scene(layout, 500, 650);
 
+        // Custom cell factory to add color box for priority, without interfering with other styles
+        listView.setCellFactory(lv -> new ListCell<Task>() {
+            private Rectangle colorBox = new Rectangle(10, 10);
+
+            @Override
+            protected void updateItem(Task task, boolean empty) {
+                super.updateItem(task, empty);
+                if (empty || task == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle("");
+                } else {
+                    setText(task.toString());
+                    colorBox.setFill(getPriorityColor(task.getPriority()));
+                    setGraphic(colorBox);
+
+                    // Style overdue tasks background, separate from priority color box
+                    if (task.getDueDate().isBefore(LocalDate.now())) {
+                        setStyle("-fx-background-color: lightcoral;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
+
         primaryStage.setTitle("Task Manager");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private Color getPriorityColor(int priority) {
+        if (priority >= 8) return Color.RED;
+        else if (priority >= 5) return Color.ORANGE;
+        else return Color.GREEN;
     }
 
     private void refreshList() {
@@ -152,3 +186,4 @@ public class Main extends Application {
         launch(args);
     }
 }
+

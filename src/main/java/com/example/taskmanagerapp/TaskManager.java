@@ -76,7 +76,8 @@ public class TaskManager {
         return result;
     }
 
+    // Changed this to peek to keep tasks visible until explicitly deleted
     public Task processTask() {
-        return taskQueue.poll();
+        return taskQueue.peek();
     }
 }
